@@ -1,3 +1,14 @@
+package com.example.jmbnet.listadelacompra;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
@@ -35,29 +46,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
-
-
-        // Adding new product
-        public void addProduct(Product product) {}
-
-// Getting single product
-        public Contact getProduct(int id) {}
-
-// Getting All products
-        public List<Product> getAllProducts() {}
-
-// Getting products Count
-        public int getProductsCount() {}
-// Updating single product
-        public int updateProduct(Product product) {}
-
-// Deleting single product
-        public void deleteProduct(Product product) {}
-
     }
 
-    // addContact()
-    // Adding new contact
+    // addProduct()
+    // Adding new product
     public void addProduct(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -70,25 +62,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // getContact()
-    // Getting single contact
+    // getProduct()
+    // Getting single product
     public Product getProduct(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_PRODUCTS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_PRICE }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_PRODUCTS, new String[]{KEY_ID,
+                        KEY_NAME, KEY_PRICE}, KEY_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Product product = new Contact(Integer.parseInt(cursor.getString(0)),
+        Product product = new Product(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2));
         // return contact
         return product;
     }
 
-    // getAllContacts()
-    // Getting All Contacts
+    // getAllProducts()
+    // Getting All Products
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<Product>();
         // Select All Query
@@ -111,5 +103,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return contact list
         return productList;
+    }
+
+    // getProductsCount()
+    // Getting products Count
+    public int getProductsCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_PRODUCTS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
+
+    // updateProduct()
+    // Updating single product
+    public int updateProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, product.getName());
+        values.put(KEY_PRICE, product.getPrice());
+
+        // updating row
+        return db.update(TABLE_PRODUCTS, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(product.getID())});
+    }
+
+    // deleteProduct()
+    // Deleting single product
+    public void deleteProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PRODUCTS, KEY_ID + " = ?",
+                new String[]{String.valueOf(product.getID())});
+        db.close();
     }
 }
