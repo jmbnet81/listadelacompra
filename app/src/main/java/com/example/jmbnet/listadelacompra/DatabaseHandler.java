@@ -54,8 +54,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, product.getName()); // Contact Name
-        values.put(KEY_PRICE, product.getPrice()); // Contact Phone Number
+        values.put(KEY_NAME, product.getName()); // Product Name
+        values.put(KEY_PRICE, product.getPrice()); // Product Price
 
         // Inserting Row
         db.insert(TABLE_PRODUCTS, null, values);
@@ -74,7 +74,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Product product = new Product(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+                cursor.getString(1), cursor.getDouble(2));
         // return contact
         return product;
     }
@@ -95,7 +95,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Product product = new Product();
                 product.setID(Integer.parseInt(cursor.getString(0)));
                 product.setName(cursor.getString(1));
-                product.setPrice(cursor.getString(2));
+                product.setPrice(cursor.getDouble(2));
                 // Adding contact to list
                 productList.add(product);
             } while (cursor.moveToNext());

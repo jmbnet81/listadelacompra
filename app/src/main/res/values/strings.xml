@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Lista de la compra</string>
     <string name="title_producto_detail">Producto Detail</string>
+    <string name="title_activity_producto_new">ProductoNew</string>
 </resources>

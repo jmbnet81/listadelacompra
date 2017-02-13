@@ -4,7 +4,7 @@ public class Product {
     //private variables
     int _id;
     String _name;
-    String _price;
+    double _price;
 
     // Empty constructor
     public Product() {
@@ -12,14 +12,14 @@ public class Product {
     }
 
     // constructor
-    public Product(int id, String name, String _price) {
+    public Product(int id, String name, double _price) {
         this._id = id;
         this._name = name;
         this._price = _price;
     }
 
     // constructor
-    public Product(String name, String _price) {
+    public Product(String name, double _price) {
         this._name = name;
         this._price = _price;
     }
@@ -45,12 +45,12 @@ public class Product {
     }
 
     // getting phone number
-    public String getPrice() {
+    public double getPrice() {
         return this._price;
     }
 
     // setting phone number
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this._price = price;
     }
 }
