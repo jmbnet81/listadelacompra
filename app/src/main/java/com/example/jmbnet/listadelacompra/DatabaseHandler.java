@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,15 +52,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // addProduct()
     // Adding new product
     public void addProduct(Product product) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, product.getName()); // Product Name
-        values.put(KEY_PRICE, product.getPrice()); // Product Price
+            ContentValues values = new ContentValues();
+            values.put(KEY_NAME, product.getName()); // Product Name
+            values.put(KEY_PRICE, product.getPrice()); // Product Price
 
-        // Inserting Row
-        db.insert(TABLE_PRODUCTS, null, values);
-        db.close(); // Closing database connection
+            // Inserting Row
+            db.insert(TABLE_PRODUCTS, null, values);
+            db.close(); // Closing database connection
+        } catch (Exception ex) {
+            Log.d("ERROR", ex.getMessage());
+        }
     }
 
     // getProduct()

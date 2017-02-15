@@ -1,7 +1,10 @@
 package com.example.jmbnet.listadelacompra;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,12 +49,14 @@ public class ProductoListActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producto_list);
 
+        db = ((MyBaseClass) getApplication()).mDB;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
@@ -61,7 +66,6 @@ public class ProductoListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(ProductoListActivity.this, ProductoNew.class);
-                i.putExtra("Mensaje", "Hola Cariño!");
                 startActivity(i);
             }
         });
@@ -168,6 +172,7 @@ public class ProductoListActivity extends AppCompatActivity {
                         intent.putExtra(ProductoDetailFragment.ARG_ITEM_ID, holder.mItem.getID());
 
                         context.startActivity(intent);
+                        setResult(Activity.RESULT_OK);
                     }
                 }
             });
