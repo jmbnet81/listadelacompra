@@ -169,7 +169,7 @@ public class ProductoListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ProductoDetailActivity.class);
-                        intent.putExtra(ProductoDetailFragment.ARG_ITEM_ID, holder.mItem.getID());
+                        intent.putExtra(ProductoDetailActivity.ARG_ITEM_ID, holder.mItem.getID());
 
                         context.startActivity(intent);
                         setResult(Activity.RESULT_OK);

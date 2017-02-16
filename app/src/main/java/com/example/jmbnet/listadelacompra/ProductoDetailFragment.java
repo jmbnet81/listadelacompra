@@ -39,12 +39,11 @@ public class ProductoDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        if (savedInstanceState.getSerializable("ARG_ITEM_ID") != "") {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = db.getProduct(Integer.getInteger(getArguments().getString(ARG_ITEM_ID)));
+            mItem = db.getProduct(Integer.getInteger((savedInstanceState.getSerializable("ARG_ITEM_ID").toString())));
 
             Activity activity = this.getActivity();
 
